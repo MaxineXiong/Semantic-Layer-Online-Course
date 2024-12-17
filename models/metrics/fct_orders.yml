@@ -196,18 +196,19 @@ metrics:
       grain_to_date: month
 
 
-# saved_queries:
-#   - name: order_metrics
-#     description: testing out order metrics in one table 
-#     query_params:
-#       metrics:
-#         - cumulative_order_amount
-#         - min_order_amount
-#         - max_order_amount
-#       group_by:
-#         - TimeDimension('metric_time', 'day')
-#     exports:
-#       - name: order_metrics
-#         config:
-#           export_as: table
-#           schema: faith_tests_exports
+saved_queries:
+  - name: order_metrics
+    description: Relevant order metrics in one table.
+    query_params:
+      metrics:
+        - large_order
+        - food_order_amount
+        - order_total
+      group_by:
+        - Entity('order_id')
+        - TimeDimension('order_id__ordered_at', 'day')
+        - Dimension('customer__customer_name')
+    exports:
+      - name: order_metrics
+        config:
+          export_as: table
